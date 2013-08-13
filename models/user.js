@@ -28,7 +28,7 @@ UserSchema.methods.setPassword = function(pass) {
 }
 
 UserSchema.methods.isValidPassword = function( pwd ) {
-  return this.passwordHash === hash(passwordString, this.salt);
+  return this.passwordHash === hash(pwd, this.salt);
 }
 
 mongoose.model('User', UserSchema);

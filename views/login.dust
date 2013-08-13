@@ -1,0 +1,9 @@
+{>layout/}
+{<main}
+Welcome to {title}
+<form method="post">
+<label>Username <input type="text" name="username"></label>
+<label>Password <input type="password" name="password"></label>
+<button class="btn" type="submit" value="Log In">Log In</button>
+</form>
+{/main}

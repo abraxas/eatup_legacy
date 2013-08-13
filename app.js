@@ -13,6 +13,26 @@ var http = require('http');
 var cons = require('consolidate');
 var path = require('path');
 var dpm = require('dust-partials-middleware');
+var flash = require('connect-flash');
+var mongoose = require('mongoose');
+
+
+
+//passport local policy
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+
+
+//Test Login
+
+
+
+
 
 
 
@@ -24,16 +44,64 @@ app.engine('dust',cons.dust);
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'dust');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser());
-app.use(express.session({ secret: 'dd05cede-040e-11e3-856f-002170491e5c'}));
-app.use(app.router);
+app.configure(function() {
+  app.use(express.favicon());
+  app.use(express.static(path.join(__dirname, 'public')));
+  app.use('/views',express.static(path.join(__dirname,'/views')));
+  app.use(express.logger('dev'));
+  app.use(express.cookieParser());
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.session({ secret: 'dd05cede-040e-11e3-856f-002170491e5c'}));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/views',express.static(path.join(__dirname,'/views')));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  var User = mongoose.model('User');
+
+  passport.use(new LocalStrategy(
+      function(username, password, done) {
+        User.findOne({ username: username }, function(err, user) {
+          if (err) { return done(err); }
+          if (!user) {
+            return done(null, false, { message: 'Incorrect username.' });
+          }
+          if (!user.isValidPassword(password)) {
+            return done(null, false, { message: 'Incorrect password.' });
+          }
+          return done(null, user);
+        });
+      }
+      ));
+  passport.serializeUser(function(user, done) {
+    done(null, user._id);
+  });
+
+  passport.deserializeUser(function(id, done) {
+    User.findById(id, function (err, user) {
+      done(err, user);
+    });
+  });
+  app.use(app.router);
+});
+
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+app.get('/logmein', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+app.get('/login',function(req,res) {
+  res.render('login', { layout: "layout" });
+})
+
 
 
 // development only
