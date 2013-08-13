@@ -1,0 +1,23 @@
+{^xhr}
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+{+title}
+  Ganified!
+{/title}
+</title>
+<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css'>
+<link rel='stylesheet' href='/stylesheets/style.css'>
+</head>
+<body>
+  {+main}
+  Coming Soon...
+  {/main}
+</body>
+</html>
+{:else}
+{+main}
+  {}
+{/main}
+{/xhr}

@@ -1,0 +1,4 @@
+{>layout/}
+{<main}
+Welcome to {title}
+{/main}

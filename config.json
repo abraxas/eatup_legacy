@@ -1,0 +1,13 @@
+{
+  "database": "mongodb://localhost/eatup",
+
+  "default_users": [
+    {
+      "username": "abraxas",
+      "email": "cjay.martin@gmail.com",
+      "password": "test123"
+    }
+  ]
+
+
+}

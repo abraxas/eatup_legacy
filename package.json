@@ -7,6 +7,17 @@
   },
   "dependencies": {
     "express": "3.3.5",
-    "jade": "*"
+    "express-minify":"*",
+    "async":"*",
+    "dustjs-linkedin":"*",
+    "consolidate":"*",
+    "promise":"*",
+    "mongoose":"*",
+    "dust-partials-middleware":"*",    
+    "passport": "*",
+    "jade": "*",
+
+    "crypto": "*",
+    "node-uuid": "*"    
   }
 }

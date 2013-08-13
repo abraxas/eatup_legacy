@@ -1,0 +1,9 @@
+{>layout/}
+{<main}
+User List
+<ul>
+{#users}
+<li>{username} &lt;{email}&gt;
+{/users}
+</ul>
+{/main}
