@@ -11,6 +11,7 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var cons = require('consolidate');
+var klei = require('klei-dust');
 var path = require('path');
 var dpm = require('dust-partials-middleware');
 var flash = require('connect-flash');
@@ -38,13 +39,14 @@ var passport = require('passport')
 
 var app = express();
 
-app.engine('dust',cons.dust);
 
 // all environments
+app.configure(function() {
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
+
+app.engine('dust',klei.dust);
 app.set('view engine', 'dust');
-app.configure(function() {
   app.use(express.favicon());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use('/views',express.static(path.join(__dirname,'/views')));
@@ -83,6 +85,15 @@ app.configure(function() {
       done(err, user);
     });
   });
+
+  //awesome pre-stash middleware for useful(less) stuff
+  app.use(function (req,res,next) {
+    if(req.user) {
+      res.locals.current_user = req.user
+    }
+    next();
+  })
+
   app.use(app.router);
 });
 
@@ -92,6 +103,12 @@ app.post('/login',
     res.redirect('/');
   });
 
+app.get('/logout', 
+  function(req, res) {
+    req.logout()
+    res.redirect('/login');
+  });
+
 app.get('/logmein', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
@@ -99,7 +116,7 @@ app.get('/logmein',
   });
 
 app.get('/login',function(req,res) {
-  res.render('login', { layout: "layout" });
+  res.render('login');
 })
 
 
@@ -114,6 +131,8 @@ app.get('/users', user.list);
 
 app.use('/partials',dpm(__dirname,'/views'));
 
+//default layout (can be overridden if needed)
+app.locals.layout = 'layout'
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

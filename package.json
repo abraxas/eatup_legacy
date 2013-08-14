@@ -9,6 +9,7 @@
     "express": "3.3.5",
     "express-minify":"*",
     "connect-flash":"*",
+    "klei-dust":"*",
     "async":"*",
     "dustjs-linkedin":"*",
     "consolidate":"*",

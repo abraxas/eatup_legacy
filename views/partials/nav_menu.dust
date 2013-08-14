@@ -1,0 +1,17 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      {#current_user}
+      <ul class="nav">
+        <li class="active">
+        <a href="#">Home</a>
+        </li>
+        <li><a href="#">A</a></li>
+        <li><a href="#">B</a></li>
+      </ul>
+      {/current_user}
+
+      {>"./partials/user_menu"/}
+    </div>
+  </div>
+</div>

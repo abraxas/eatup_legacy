@@ -1,23 +1,47 @@
 {^xhr}
 <!DOCTYPE html>
 <html>
-<head>
-<title>
-{+title}
-  Ganified!
-{/title}
-</title>
-<link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css'>
-<link rel='stylesheet' href='/stylesheets/style.css'>
-</head>
-<body>
+  <head>
+    <title>
+      {+title}
+      Ganified!
+      {/title}
+    </title>
+    <link rel='stylesheet' href='/bootstrap/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    {>"./partials/nav_menu" /}
+    <div class="header">
+      <div class="container">
+        <div class="well">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="span2">
+          <div class="well">span2</div>
+        </div>
+
+        <div class="span10">
+          <div class="well">
+            {+main}
+            Coming Soon...
+            {/main}
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    </body>
+  </html>
+  {:else}
   {+main}
-  Coming Soon...
-  {/main}
-</body>
-</html>
-{:else}
-{+main}
   {}
-{/main}
-{/xhr}
+  {/main}
+  {/xhr}
