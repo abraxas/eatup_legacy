@@ -23,12 +23,13 @@
     </div>
 
     <div class="container">
+    {?sidebar}
       <div class="row">
-        <div class="span2">
-          <div class="well">span2</div>
+        <div class="span3">
+          <div class="well">span3</div>
         </div>
 
-        <div class="span10">
+        <div class="span9">
           <div class="well">
             {+main}
             Coming Soon...
@@ -36,6 +37,15 @@
           </div>
         </div>
       </div>
+    {:else}
+      <div class="row">
+        <div class="span12">
+            {+main}
+            Coming Soon...
+            {/main}
+        </div>
+      </div>
+    {/sidebar}
     </div>
    
     </body>

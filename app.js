@@ -9,6 +9,7 @@ var express = require('express');
 var minify = require('express-minify');
 var routes = require('./routes');
 var user = require('./routes/user');
+var recipes = require('./routes/recipes');
 var http = require('http');
 var cons = require('consolidate');
 var klei = require('klei-dust');
@@ -126,6 +127,32 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+function mh(a,b,c) {
+  return {id: a,text: b,route: c}
+}
+
+app.locals.menu = [
+  mh('cookbook','Cookbook'),
+  mh('recipes','My Recipes','/recipes'),
+  mh('help','Help'),
+]
+
+app.locals.is_active_tab = function(chunk,context,bodies) {
+  return chunk.tap(function(data) {
+    var me = context.current();
+    var active = context.get('active_tab');
+    console.log(JSON.stringify(me));
+    console.log(active);
+    if(me.id == active) {
+      console.log("MATCH");
+      return data;
+    } else {
+      return "";
+    }
+  }).render(bodies.block,context).untap()
+}
+
+
 app.get('/', routes.index);
 app.get('/users', user.list);
 
@@ -133,6 +160,12 @@ app.use('/partials',dpm(__dirname,'/views'));
 
 //default layout (can be overridden if needed)
 app.locals.layout = 'layout'
+
+
+
+app.get('/recipes',recipes.recipe_base);
+app.get('/recipes',recipes.recipes);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
