@@ -2,4 +2,26 @@
   <ul>
   <li><label>Name<input name="name" value="{name}" /></label></li>
   <li><label>Description<input name="description" value="{description}" /></label></li>
+  <li><label>Steps</label>
+    <ol id="recipe_steps">
+      {> "partials/recipe_form_steps" /}
+    </ol>
+        <a id="add_step" href="#">Add Step</a>
+  </li>
   </ul>
+
+<script src="/javascripts/dust-full-1.2.5.js" ></script>
+<script src="/partials/partials/recipe_form_step.js" ></script>
+<script>
+  $('#add_step').click(function() {
+    dust.render("partials/recipe_form_step",null,function(err,out) {
+    if(err) {
+      console.log(err);
+    }
+    $('#recipe_steps').append(out);
+    });
+  });
+  $(document).on('click','.delete_step',function() {
+    $(this).parent().remove();
+  });
+</script>

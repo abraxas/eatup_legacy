@@ -1,0 +1,3 @@
+<li><input name="step" value="{.}">
+<a href="#" class="delete_step">Delete</a>
+</li>

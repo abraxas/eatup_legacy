@@ -59,6 +59,7 @@ exports.edit = function(req, res){
 
 exports.create = function(req, res){
   var proto = req.body;
+  proto.steps = proto.step;
   proto._user = req.user._id;
   var r = new Recipe(proto);
   console.log("SET " + JSON.stringify(proto));
@@ -76,6 +77,8 @@ exports.update = function(req, res) {
     console.log("DOSET " + f + " is " + req.body[f])      
     recipe[f] = req.body[f]      
   }
+  recipe.steps = req.body.step;
+
   recipe.save(function(err,obj) {
     console.log("ERROR? " + err);
      res.redirect('/recipes');
