@@ -1,0 +1,16 @@
+{>layout/}
+{<main}
+Welcome to {title}
+
+<h2>Recipes</h2>
+<ul>
+{#recipes}
+  <li>{name}
+    <a href="/recipes/{_id}/edit">Edit</a>
+    <a href="/recipes/{_id}/delete">Delete</a>
+  
+  </li>
+{/recipes}
+</ul>
+<a href="/recipes/new">Add Recipe</a>
+{/main}

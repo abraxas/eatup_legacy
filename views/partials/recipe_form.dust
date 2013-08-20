@@ -1,0 +1,5 @@
+<input name="_user" value="{_user}" type="hidden" />
+  <ul>
+  <li><label>Name<input name="name" value="{name}" /></label></li>
+  <li><label>Description<input name="description" value="{description}" /></label></li>
+  </ul>

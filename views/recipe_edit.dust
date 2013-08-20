@@ -1,0 +1,11 @@
+{>layout/}
+{<main}
+<h1> Edit Recipe</h1>
+
+{#recipe}
+<form method="POST">
+  {>"./partials/recipe_form" /}
+  <button type="submit">Submit</button>
+</form>
+{/recipe}
+{/main}

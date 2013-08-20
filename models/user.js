@@ -7,6 +7,8 @@ var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
 
+
+
 var UserSchema = new Schema({
   username : { type: String, required: true, unique: true },
     email : { type: String, required: true },
@@ -29,6 +31,11 @@ UserSchema.methods.setPassword = function(pass) {
 
 UserSchema.methods.isValidPassword = function( pwd ) {
   return this.passwordHash === hash(pwd, this.salt);
+}
+
+UserSchema.methods.getRecipes = function(callback) {
+  var Recipe = mongoose.model('Recipe');
+  return Recipe.findByUser(this,callback);
 }
 
 mongoose.model('User', UserSchema);

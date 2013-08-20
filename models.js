@@ -11,6 +11,7 @@ var Schema = mongoose.Schema
 
 
 exports.User = require('./models/user');
+exports.Recipe = require('./models/recipe');
 
 
 module.exports = exports;
