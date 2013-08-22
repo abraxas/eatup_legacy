@@ -1,5 +1,3 @@
-var foo = function() { console.log("FOO"); }
-
 var remember = function() {
   var remember_data = {};
 

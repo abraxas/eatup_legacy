@@ -1,21 +1,27 @@
+{#error}
+<div class="alert alert-error">
+<strong>Error: </strong>{.}
+</div>
+{/error}
 <input name="_user" value="{_user}" type="hidden" />
-  <ul>
-  <li><label>Name<input name="name" value="{name}" /></label></li>
-  <li><label>Description<input name="description" value="{description}" /></label></li>
-  <li><label>Ingredients</label>
-    <ol id="recipe_ingredients">
+  
+  <label for="name">Name</label>
+  <input name="name" value="{name}" />
+  <label for="description">Description</label>
+  <input name="description" value="{description}" />
+  <label for="ingredients.amount[1]">Ingredients</label>
+    <ul id="recipe_ingredients">
       {> "partials/recipe_form_ingredients" /}
-    </ol>
+    </ul>
         <a id="add_ingredient" href="#">Add Ingredient</a>
-  </li>
-  </ul>
-  <li><label>Steps</label>
+  
+  
+  <label for="step">Steps</label>
     <ol id="recipe_steps">
       {> "partials/recipe_form_steps" /}
     </ol>
         <a id="add_step" href="#">Add Step</a>
-  </li>
-  </ul>
+<br />        
 
 <script src="/javascripts/dust-full-1.2.5.js" ></script>
 <script src="/javascripts/dust-helpers-1.1.1.js" ></script>

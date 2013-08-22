@@ -1,9 +1,8 @@
-<li>
-{@countUp domain="form_ingredient"}
-<input name="set" value="{.}" type="hidden" />
-<input name="amount[{.}]" value="{.}">
-<input name="measure[{.}]" value="{.}">
-<input name="ingredient[{.}]" value="{.}">
-<a href="#" class="delete_step">Delete</a>
+<li class="ingredient">
+{@countUp domain="form_ingredients" rebase="base"}
+<input class="amount" name="ingredients.amount[{index}]" value="{base.amount}">
+<input class="measure" name="ingredients.measure[{index}]" value="{base.measure}">
+<input class="ingredient" name="ingredients.ingredient[{index}]" value="{base.ingredient}">
+<a href="#" class="delete_step"><i class="icon-trash"></i></a>
 {/countUp}
 </li>

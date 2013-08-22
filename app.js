@@ -145,7 +145,7 @@ app.set('view engine', 'dust');
           scripts: ['http://code.jquery.com/jquery-1.5.min.js'],
           done: function (err, window) {
             window.jQuery('body').attr('data-remember',data);
-            body = window.document.innerHTML;
+            body = "<!DOCTYPE HTML>" + window.document.innerHTML;
             fn(err,body);
           } 
         });

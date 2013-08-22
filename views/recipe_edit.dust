@@ -1,11 +1,13 @@
 {>layout/}
 {<main}
-<h1> Edit Recipe</h1>
 
 {#recipe}
 <form method="POST">
+  <fieldset>
+  <legend>Edit Recipe</legend>
   {>"./partials/recipe_form" /}
   <button type="submit">Submit</button>
+  </fieldset>
 </form>
 {/recipe}
 {/main}

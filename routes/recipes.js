@@ -46,10 +46,9 @@ exports.id_base = function(req,res,next) {
   var rx = Recipe.findById(id);
 
   res.locals.recipe_q = rx;
-  console.log("I I " + JSON.stringify(res.locals));
   rx.exec(function(err,recipe) {
-    console.log("J J " + JSON.stringify(res.locals));
     res.locals.recipe = recipe;
+    console.log("OI " + JSON.stringify(recipe))
     next();
   })
 }
@@ -75,7 +74,7 @@ exports.edit = function(req, res){
 }
 
 exports.create = function(req, res){
-  var proto = req.body;
+  var proto = homogenize(req.body);
   proto.steps = proto.step;
   proto._user = req.user._id;
   var r = new Recipe(proto);
@@ -86,19 +85,69 @@ exports.create = function(req, res){
     res.redirect('/recipes');
   });
 }
+
+var homogenize = function(body) {
+  console.log("BEFORE " + JSON.stringify(body));
+  if(body.set) {
+    var bodyset = Array.isArray(body.set) ? body.set : [body.set];
+    for(var i in bodyset) {
+    
+      var set = bodyset[i]
+      var rval = [];
+      if(!body[set]) {
+        var arrx = Object.keys(body).map(function(a) {
+          if(a.indexOf(set + ".") == 0) {
+            return a;
+          }
+        }).filter(function(a) {return a});
+        console.log("ARRX: " + JSON.stringify(arrx));
+      
+        var arry = arrx.map(function(z) { return body[z] })
+        console.log(JSON.stringify(arry))
+        var ml = arrx.map(function(a) { return body[a].length })
+        console.log(JSON.stringify(ml))
+        var j = Math.max.apply(null,ml)
+
+        for(var idx=0; idx < j; idx++) {
+          var aobj = {}
+          var yes = 0;
+          for (var fldi in arrx) {
+            var fld = arrx[fldi]
+            var rlfld = fld.replace(RegExp("^" + set + "\\."),"")
+            aobj[rlfld] = body[fld][idx] 
+          }        
+          rval.push(aobj);
+        }
+        body[set] = rval
+      }
+    }
+  }
+
+  console.log("AFTER " + JSON.stringify(body));
+  return body;
+}
+
 exports.update = function(req, res) {
   var recipe = res.locals.recipe;
-  var flds = ['name','description']
+  var flds = ['name','description','ingredients']
+
+  var data = homogenize(req.body);
+
   for(var i in flds) {
     var f = flds[i]
-    console.log("DOSET " + f + " is " + req.body[f])      
-    recipe[f] = req.body[f]      
+    console.log("DOSET " + f + " is " + data[f])      
+    recipe[f] = data[f]      
   }
-  recipe.steps = req.body.step;
+  recipe.steps = data.step;
 
   recipe.save(function(err,obj) {
     console.log("ERROR? " + err);
-     res.redirect('/recipes');
+    if(err) {
+  
+      res.render('recipe_edit', {error: err});
+    } else {
+      res.redirect('/recipes');
+    }
   });
 }
 

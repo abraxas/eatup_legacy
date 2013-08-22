@@ -1,5 +1,6 @@
-{#steps}
+<input name="set" value="ingredients" type="hidden">
+{#ingredients}
 {> "partials/recipe_form_ingredient" /}
 {:else}
 {> "partials/recipe_form_ingredient":new /}
-{/steps}
+{/ingredients}

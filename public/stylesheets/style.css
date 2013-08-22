@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+.step input,.ingredient input,.ingredient select {
+  margin-right: 8px;
+}
+
+.ingredient .amount {
+  width: 2em;
+}
+.ingredient .measure {
+  width: 2em;
+}
+.ingredient .ingredient {
+  width: 12em;
+}

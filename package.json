@@ -12,6 +12,7 @@
     "klei-dust":"https://github.com/abraxas/dust/tarball/develop",
     "async":"*",
     "jsdom":"*",
+    "lazy":"*",
     "dustjs-linkedin":"*",
     "consolidate":"*",
     "promise":"*",
