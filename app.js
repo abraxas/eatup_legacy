@@ -3,7 +3,7 @@
  */
 
 //Never used directly..this sets up the mongoose singleton for us.
-var models = require('./models');
+var models = require('./eatup/models');
 
 var express = require('express');
 var minify = require('express-minify');
@@ -11,7 +11,6 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var recipes = require('./routes/recipes');
 var http = require('http');
-var cons = require('consolidate');
 var klei = require('klei-dust');
 var path = require('path');
 var dpm = require('dust-partials-middleware');
@@ -19,6 +18,7 @@ var flash = require('connect-flash');
 var mongoose = require('mongoose');
 
 
+var nav = require('./eatup/nav');
 
 //passport local policy
 var passport = require('passport')
@@ -42,11 +42,21 @@ var app = express();
 
 
 // all environments
-app.configure(function() {
+app.configure(function() {  
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 
+
+klei.useHelpers = 1;
+klei.onDustInit(function(dust) {
+  var df = require('./public/javascripts/dust-filters');  
+  df.attach_helpers(dust);
+});
+
+
+
 app.engine('dust',klei.dust);
+
 app.set('view engine', 'dust');
   app.use(express.favicon());
   app.use(express.static(path.join(__dirname, 'public')));
@@ -92,10 +102,16 @@ app.set('view engine', 'dust');
     if(req.user) {
       res.locals.current_user = req.user
     }
+
+
+
     next();
   })
 
+
   app.use(app.router);
+
+
 });
 
 app.post('/login', 
@@ -127,30 +143,9 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-function mh(a,b,c) {
-  return {id: a,text: b,route: c}
-}
 
-app.locals.menu = [
-  mh('cookbook','Cookbook'),
-  mh('recipes','My Recipes','/recipes'),
-  mh('help','Help'),
-]
+nav.load_menu(app);
 
-app.locals.is_active_tab = function(chunk,context,bodies) {
-  return chunk.tap(function(data) {
-    var me = context.current();
-    var active = context.get('active_tab');
-    console.log(JSON.stringify(me));
-    console.log(active);
-    if(me.id == active) {
-      console.log("MATCH");
-      return data;
-    } else {
-      return "";
-    }
-  }).render(bodies.block,context).untap()
-}
 
 
 app.get('/', routes.index);
@@ -162,18 +157,7 @@ app.use('/partials',dpm(__dirname,'/views'));
 app.locals.layout = 'layout'
 
 
-
-app.get('/recipes*',recipes.base);
-app.post('/recipes*',recipes.base);
-app.get('/recipes',recipes.list);
-app.get('/recipes/new',recipes.add);
-app.post('/recipes/new',recipes.create);
-app.get('/recipes/:id*',recipes.id_base);
-app.post('/recipes/:id*',recipes.id_base);
-app.get('/recipes/:id/edit',recipes.edit);
-app.post('/recipes/:id/edit',recipes.update);
-app.get('/recipes/:id/delete',recipes.remove);
-app.get('/recipefudge',recipes.recipefudge);
+recipes.register_routes(app);
 
 
 http.createServer(app).listen(app.get('port'), function(){

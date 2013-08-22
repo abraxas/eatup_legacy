@@ -2,6 +2,13 @@
   <ul>
   <li><label>Name<input name="name" value="{name}" /></label></li>
   <li><label>Description<input name="description" value="{description}" /></label></li>
+  <li><label>Ingredients</label>
+    <ol id="recipe_ingredients">
+      {> "partials/recipe_form_ingredients" /}
+    </ol>
+        <a id="add_ingredient" href="#">Add Ingredient</a>
+  </li>
+  </ul>
   <li><label>Steps</label>
     <ol id="recipe_steps">
       {> "partials/recipe_form_steps" /}
@@ -11,7 +18,10 @@
   </ul>
 
 <script src="/javascripts/dust-full-1.2.5.js" ></script>
+<script src="/javascripts/dust-helpers-1.1.1.js" ></script>
+<script src="/javascripts/dust-filters.js" ></script>
 <script src="/partials/partials/recipe_form_step.js" ></script>
+<script src="/partials/partials/recipe_form_ingredient.js" ></script>
 <script>
   $('#add_step').click(function() {
     dust.render("partials/recipe_form_step",null,function(err,out) {
@@ -19,6 +29,17 @@
       console.log(err);
     }
     $('#recipe_steps').append(out);
+    });
+  });
+  $(document).on('click','.delete_step',function() {
+    $(this).parent().remove();
+  });
+  $('#add_ingredient').click(function() {
+    dust.render("partials/recipe_form_ingredient",null,function(err,out) {
+    if(err) {
+      console.log(err);
+    }
+    $('#recipe_ingredients').append(out);
     });
   });
   $(document).on('click','.delete_step',function() {

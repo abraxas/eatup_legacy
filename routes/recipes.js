@@ -3,6 +3,23 @@
  * GET home page.
  */
 
+exports.register_routes = function(app) {
+  var recipes = exports;
+  app.get('/recipes*',recipes.base);
+  app.post('/recipes*',recipes.base);
+  app.get('/recipes',recipes.list);
+  app.get('/recipes/new',recipes.add);
+  app.post('/recipes/new',recipes.create);
+  app.get('/recipes/:id*',recipes.id_base);
+  app.post('/recipes/:id*',recipes.id_base);
+  app.get('/recipes/:id/edit',recipes.edit);
+  app.post('/recipes/:id/edit',recipes.update);
+  app.get('/recipes/:id/delete',recipes.remove);
+  app.get('/recipefudge',recipes.recipefudge);
+
+}
+
+
 var User = require('mongoose').model('User');
 var Recipe = require('mongoose').model('Recipe');
 

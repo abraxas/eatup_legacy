@@ -9,7 +9,7 @@
     "express": "3.3.5",
     "express-minify":"*",
     "connect-flash":"*",
-    "klei-dust":"*",
+    "klei-dust":"https://github.com/abraxas/dust/tarball/develop",
     "async":"*",
     "dustjs-linkedin":"*",
     "consolidate":"*",

@@ -1,0 +1,5 @@
+{#steps}
+{> "partials/recipe_form_ingredient" /}
+{:else}
+{> "partials/recipe_form_ingredient":new /}
+{/steps}

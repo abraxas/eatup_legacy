@@ -1,7 +1,7 @@
 var crypto = require('crypto'),
     uuid = require('node-uuid'),
     mongoose = require('mongoose'),
-    config = require('../config.json')
+    config = require('../../config.json')
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
@@ -11,7 +11,7 @@ var User = mongoose.model('User');
 var IngredientSchema = new Schema({
   amount: Number,
   measure: String,
-  name: String
+  ingredient: String
 });
 
 var RecipeSchema = new Schema({

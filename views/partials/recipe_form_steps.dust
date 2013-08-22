@@ -1,5 +1,5 @@
 {#steps}
 {> "partials/recipe_form_step" /}
 {:else}
-<li><input name="step" value=""></li>
+{> "partials/recipe_form_step":new /}
 {/steps}

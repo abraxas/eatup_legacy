@@ -1,7 +1,7 @@
 var crypto = require('crypto'),
     uuid = require('node-uuid'),
     mongoose = require('mongoose'),
-    config = require('../config.json')
+    config = require('../../config.json')
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;

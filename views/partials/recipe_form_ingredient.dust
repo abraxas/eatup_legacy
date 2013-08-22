@@ -1,0 +1,9 @@
+<li>
+{@countUp domain="form_ingredient"}
+<input name="set" value="{.}" type="hidden" />
+<input name="amount[{.}]" value="{.}">
+<input name="measure[{.}]" value="{.}">
+<input name="ingredient[{.}]" value="{.}">
+<a href="#" class="delete_step">Delete</a>
+{/countUp}
+</li>
