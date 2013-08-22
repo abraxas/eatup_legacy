@@ -19,6 +19,7 @@
 
 <script src="/javascripts/dust-full-1.2.5.js" ></script>
 <script src="/javascripts/dust-helpers-1.1.1.js" ></script>
+<script src="/javascripts/remember.js" ></script>
 <script src="/javascripts/dust-filters.js" ></script>
 <script src="/partials/partials/recipe_form_step.js" ></script>
 <script src="/partials/partials/recipe_form_ingredient.js" ></script>

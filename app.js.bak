@@ -17,7 +17,6 @@ var dpm = require('dust-partials-middleware');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
 
-var remember = require('./public/javascripts/remember');  
 
 var nav = require('./eatup/nav');
 
@@ -47,16 +46,14 @@ app.configure(function() {
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 
-app.use(function(req,res,next) {
-  remember.forget();
-  next();
-})
 
 klei.useHelpers = 1;
 klei.onDustInit(function(dust) {
   var df = require('./public/javascripts/dust-filters');  
   df.attach_helpers(dust);
 });
+
+
 
 app.engine('dust',klei.dust);
 
@@ -111,53 +108,26 @@ app.set('view engine', 'dust');
     next();
   })
 
-  app.use(function(req,res,next) {
-
-    //after render callback
-    var _render = res.render;
-    res.render = function(view, options, fn) {
-      var self = this,
-          options = options || {},
-          req = this.req,
-          app = req.app;
-
-      // support callback function as second arg
-      if ('function' == typeof options) {
-        fn = options, options = {};
-      }
-
-      options._locals = self.locals;
-
-      // default callback to respond
-      fn = fn || function(err, str){
-        if (err) return req.next(err);
-        self.send(str);
-      };
-
-      _render.call(res, view, options, function(err,body) {
-
-
-        var data = remember.get();
-
-        var jsdom = require('jsdom');
-        jsdom.env({
-          html: body,
-          scripts: ['http://code.jquery.com/jquery-1.5.min.js'],
-          done: function (err, window) {
-            window.jQuery('body').attr('data-remember',data);
-            body = window.document.innerHTML;
-            fn(err,body);
-          } 
-        });
-      })
-
-    };
-    next();    
-  });
 
   app.use(app.router);
 
+  app.use(function(req,res,next) {
+    var data = dust_filters.remember.data;
+    var jsdom = require('jsdom');
+    jsdom.env({
+      html: res.body,
+      scripts: [
+      'http://code.jquery.com/jquery-1.5.min.js'
+      ]
+    }, function (err, window) {
+      var $ = window.jQuery;
 
+      //      $('body').data('remember',data);
+      //      res.body = $('body');
+      next();
+    });
+
+  })
 
 });
 

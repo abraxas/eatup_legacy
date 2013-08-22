@@ -1,23 +1,37 @@
 //let's call this the dust-wrap
 (function(exports,dust){
 
-if(typeof window === 'undefined') {
-  remember = require('./remember')
+var count_storage = {};
+
+var remember = exports.remember = function(key,value) {
+  if(typeof window === 'undefined') {
+    //node
+    if(value) { remember[key] = value; }
+    return remember[key];
+  }
+  else {
+    if(!remember.loaded) {
+
+      remember.loaded = 1;
+    }
+  }
+}
+remember.loaded = null;
+remember.data = {};
+remember.get = function() {
+  return remember.data;
 }
 
-//var count_storage = {}
 dust.helpers.countUp = dust.filters.countUp = function(chunk,context,bodies,params) {
-  var count_storage = remember('countUp.storage');
-  if(!count_storage) { count_storage = {} }
+  if(!dust.helpers.countUp.storage) { dust.helpers.countUp.storage = {} }
 
   var domain = dust.helpers.tap(params.domain, chunk, context) || "none";
 
   var i = count_storage[domain] || 0;
-  //console.log("DOMAIN " + domain + " CS " + JSON.stringify(count_storage));
+  console.log("DOMAIN " + domain + " CS " + JSON.stringify(count_storage));
   i=i+1
   
   count_storage[domain] = i; 
-  remember('countUp.storage',count_storage);
   return chunk.write(i-1); 
 }
 exports.countUp = dust.helpers.countUp

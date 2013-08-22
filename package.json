@@ -11,6 +11,7 @@
     "connect-flash":"*",
     "klei-dust":"https://github.com/abraxas/dust/tarball/develop",
     "async":"*",
+    "jsdom":"*",
     "dustjs-linkedin":"*",
     "consolidate":"*",
     "promise":"*",
