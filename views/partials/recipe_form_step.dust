@@ -1,3 +1,12 @@
-<li class="step"><input name="step" value="{.}">
+{@countUp domain="recipe-steps" rebase="step"}
+{@field name="step" key="step.{index}"}
+<div id="li-step-{index}" class="control-group {@is_err id="step.{index}"}error{/is_err}">
+<div class="controls>
+<label for="step">{index}. </label>
+<input name="step" value="{value}">
+<span id="name-error" class="help-inline">{#error id="step.{index}"}{.}{/error}</span>
 <a href="#" class="delete_step"><i class="icon-trash"></i></a>
-</li>
+</div>
+</div>
+{/field}
+{/countUp}

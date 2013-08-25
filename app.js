@@ -6,6 +6,7 @@
 var models = require('./eatup/models');
 
 var express = require('express');
+var expressValidator = require('express-validator')
 var minify = require('express-minify');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -67,6 +68,7 @@ app.set('view engine', 'dust');
   app.use(express.logger('dev'));
   app.use(express.cookieParser());
   app.use(express.bodyParser());
+  app.use(expressValidator());
   app.use(express.methodOverride());
   app.use(express.session({ secret: 'dd05cede-040e-11e3-856f-002170491e5c'}));
 
@@ -135,6 +137,7 @@ app.set('view engine', 'dust');
       };
 
       _render.call(res, view, options, function(err,body) {
+        return fn(err,body);
 
 
         var data = remember.get();

@@ -19,6 +19,7 @@ exports.register_routes = function(app) {
 
 }
 
+var remember = require('../public/javascripts/remember')
 
 var User = require('mongoose').model('User');
 var Recipe = require('mongoose').model('Recipe');
@@ -73,6 +74,25 @@ exports.edit = function(req, res){
   res.render('recipe_edit', { });
 }
 
+var checks = function(req) {
+  console.log("BODY = " + JSON.stringify(req.body))
+
+  req.check('name').notNull()
+  req.check('description').notNull()
+
+  for(var stepid in req.body.step) {
+    req.check('step.'+stepid).notNull()
+  }
+  for(var ingid in req.body.ingredients) {
+    req.check(['ingredients',ingid,'amount']).notNull().isNumeric()
+    req.check(['ingredients',ingid,'measure']).notNull()
+    req.check(['ingredients',ingid,'ingredient']).notNull()
+  }
+  
+
+}
+
+
 exports.create = function(req, res){
   var proto = homogenize(req.body);
   proto.steps = proto.step;
@@ -81,13 +101,14 @@ exports.create = function(req, res){
   console.log("SET " + JSON.stringify(proto));
   
   r.save(function(err,obj) {
-    console.log("ERROR? " + err);
+
+    console.log("ERROR? " + JSON.stringify(err));
+    console.log("ERRORZ? " + JSON.stringify(err.errors));
     res.redirect('/recipes');
   });
 }
 
 var homogenize = function(body) {
-  console.log("BEFORE " + JSON.stringify(body));
   if(body.set) {
     var bodyset = Array.isArray(body.set) ? body.set : [body.set];
     for(var i in bodyset) {
@@ -100,7 +121,6 @@ var homogenize = function(body) {
             return a;
           }
         }).filter(function(a) {return a});
-        console.log("ARRX: " + JSON.stringify(arrx));
       
         var arry = arrx.map(function(z) { return body[z] })
         console.log(JSON.stringify(arry))
@@ -123,11 +143,10 @@ var homogenize = function(body) {
     }
   }
 
-  console.log("AFTER " + JSON.stringify(body));
   return body;
 }
 
-exports.update = function(req, res) {
+exports.update = function(req, res, next) {
   var recipe = res.locals.recipe;
   var flds = ['name','description','ingredients']
 
@@ -135,16 +154,32 @@ exports.update = function(req, res) {
 
   for(var i in flds) {
     var f = flds[i]
-    console.log("DOSET " + f + " is " + data[f])      
     recipe[f] = data[f]      
   }
   recipe.steps = data.step;
 
-  recipe.save(function(err,obj) {
-    console.log("ERROR? " + err);
-    if(err) {
-  
-      res.render('recipe_edit', {error: err});
+  checks(req)
+  var errors = req.validationErrors();
+
+  if(errors) {
+    var tmp = errors;
+    errors = {}
+    for(var i in tmp) {
+      var e = tmp[i];
+      if(errors[e.param]) {
+        errors[e.param] = errors[e.param]+e;
+      } else {
+        errors[e.param] = [e];
+      }
+    }
+      res.render('recipe_edit', {errors: errors,blah: "fnord"});
+      return;
+  }
+  recipe.save(function(err) {
+    if(errors) {      
+      //return next(err);
+
+      res.render('recipe_edit');
     } else {
       res.redirect('/recipes');
     }

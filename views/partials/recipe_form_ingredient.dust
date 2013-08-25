@@ -1,8 +1,9 @@
-<li class="ingredient">
 {@countUp domain="form_ingredients" rebase="base"}
-<input class="amount" name="ingredients.amount[{index}]" value="{base.amount}">
-<input class="measure" name="ingredients.measure[{index}]" value="{base.measure}">
-<input class="ingredient" name="ingredients.ingredient[{index}]" value="{base.ingredient}">
+<div class="ingredients control-group">  
+<input id="ingredients-{index}-amount" 
+class="amount span1" name="ingredients.amount[{index}]" value="{base.amount}">
+<input id="ingredients-{index}-measure"  class="measure  span1" name="ingredients.measure[{index}]" value="{base.measure}">
+<input id="ingredients-{index}-ingredient" class="ingredient  span4" name="ingredients.ingredient[{index}]" value="{base.ingredient}">
 <a href="#" class="delete_step"><i class="icon-trash"></i></a>
+</div>    
 {/countUp}
-</li>

@@ -11,24 +11,19 @@ var User = mongoose.model('User');
 var IngredientSchema = new Schema({
   amount: Number,
   measure: String,
-  ingredient: String
+  ingredient: {type: String, required: true}
 });
 
 var RecipeSchema = new Schema({
   _user : { type: ObjectId, required: true, ref: 'User' },
   name : { type: String, required: true },
-  description : String,
+  description :{ type: String },
   ingredients : [IngredientSchema],
   steps : [String]
 });
 
 
-var UserSchema = new Schema({
-  username : { type: String, required: true, unique: true },
-    email : { type: String, required: true },
-    salt : { type: String, default: uuid.v1 },
-    passwordHash : { type: String }
-});
+
 
 RecipeSchema.static('findByUser', function(user,fields,options,callback) {
   var _user = user._id;
