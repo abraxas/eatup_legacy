@@ -28,16 +28,16 @@ exports.base = function(req,res,next) {
   console.log("base");
   res.locals.active_tab = 'recipes'
   
-  if(!req.user) {
-  User.findOne(function(e,user) {
-    req.login(user, function(err) {  
-      next();
-    })
-  })
-  }
-  else {
+//  if(!req.user) {
+//  User.findOne(function(e,user) {
+//    req.login(user, function(err) {  
+//      next();
+//    })
+//  })
+//  }
+//  else {
     next();
-  }
+//  }
 }
 
 exports.id_base = function(req,res,next) {
