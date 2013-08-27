@@ -55,7 +55,7 @@ app.use(function(req,res,next) {
 
 klei.useHelpers = 1;
 klei.onDustInit(function(dust) {
-  var df = require('./public/javascripts/dust-filters');  
+  var df = require('./public/javascripts/dust-filters');    
   df.attach_helpers(dust);
 });
 
@@ -113,53 +113,27 @@ app.set('view engine', 'dust');
     next();
   })
 
-  app.use(function(req,res,next) {
+//  app.use(function(req,res,next) {
 
     //after render callback
-    var _render = res.render;
-    res.render = function(view, options, fn) {
-      var self = this,
-          options = options || {},
-          req = this.req,
-          app = req.app;
+//    var _render = res.render;
+//    var data = remember.get();
 
-      // support callback function as second arg
-      if ('function' == typeof options) {
-        fn = options, options = {};
-      }
-
-      options._locals = self.locals;
-
-      // default callback to respond
-      fn = fn || function(err, str){
-        if (err) return req.next(err);
-        self.send(str);
-      };
-
-      _render.call(res, view, options, function(err,body) {
-        return fn(err,body);
+//    var _render = res.render;
+//    res.render = function(view, options, callback) {
+//       _render.call(res, "Views/" + view, options, callback);
+//    };
+//    next();
 
 
-        var data = remember.get();
-
-        var jsdom = require('jsdom');
-        jsdom.env({
-          html: body,
-          scripts: ['http://code.jquery.com/jquery-1.5.min.js'],
-          done: function (err, window) {
-            window.jQuery('body').attr('data-remember',data);
-            body = "<!DOCTYPE HTML>" + window.document.innerHTML;
-            fn(err,body);
-          } 
-        });
-      })
-
-    };
-    next();    
-  });
+// });
+  app.use(function(a,b,next) {
+//    var dj = require('./public/javascripts/dust-filters.js')
+//    dj.forget();
+    next()
+  })
 
   app.use(app.router);
-
 
 
 });

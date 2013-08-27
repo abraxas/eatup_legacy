@@ -1,6 +1,10 @@
+{@countUpInit domain="recipe-ingredients" /}
 <input name="set" value="ingredients" type="hidden">
 {#ingredients}
 {> "partials/recipe_form_ingredient" /}
 {:else}
 {> "partials/recipe_form_ingredient":new /}
 {/ingredients}
+{@countUp domain="recipe-ingredients" rebase="step"}
+<div style="display:none" id="recipe-ingredients-domain" data-value="{index}"></div>
+{/countUp}

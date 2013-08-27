@@ -5,25 +5,21 @@
 {/error}
 <input name="_user" value="{_user}" type="hidden" />
   
-  {@field name="name"}
   <div  id="name-cg" class="control-group {@is_err id="name"}error{/is_err}">
     <label class="control-label" for="name">Name</label>
     <div class="controls">
       <input name="name" value="{name}" />
-      <span id="name-error" class="help-inline">{#error id="name"}{.}{/error}</span>
+      <span id="name-error" class="help-inline">{@error id="name"}{.}{/error}</span>
     </div>
   </div>
-  {/field}
-  {@field name="description"}
   <div id="description-cg" class="control-group {@is_err id="description"}error{/is_err}">  
 
   <label  class="control-label" for="description">Description</label>
     <div class="controls">
   <input name="description" value="{value}" />
-      <span id="description-error" class="help-inline">{#error id="description"}{.}{/error}</span>
+      <span id="description-error" class="help-inline">{@error id="description"}{.}{/error}</span>
     </div>
   </div>  
-  {/field}
   <label for="ingredients.amount[1]">Ingredients</label>
     <div class="row" id="recipe_ingredients">
       {> "partials/recipe_form_ingredients" /}
@@ -68,22 +64,5 @@
     $(this).parent().remove();
   });
 
-  {?errors}
-    var errors = {errors|js|s};
-    (function(errors) {
-      for(var i in errors) {
-        var e = errors[i];
-        var param = e.param,
-            msg = e.msg,
-            value = e.value;
-          
-        param=param.replace(/\./g,'-');
-        $('#'+param).closest('.control-group').addClass('error');
-        $('#'+param+'-cg').addClass('error');
-        $('#'+param+'-error').text(msg);
-        console.log("WOO " + JSON.stringify(e));
-        console.log("GOT ERROR " + param);
-      }
-    })(errors)
-  {/errors}
+ 
 </script>

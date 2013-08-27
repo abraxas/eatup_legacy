@@ -1,5 +1,9 @@
+{@countUpInit domain="recipe-steps" /}
 {#steps}
 {> "partials/recipe_form_step" /}
 {:else}
 {> "partials/recipe_form_step":new /}
 {/steps}
+{@countUp domain="recipe-steps" rebase="step"}
+<div style="display:none" id="recipe-steps-domain" data-value="{index}"></div>
+{/countUp}

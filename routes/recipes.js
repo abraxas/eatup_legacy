@@ -167,9 +167,9 @@ exports.update = function(req, res, next) {
     for(var i in tmp) {
       var e = tmp[i];
       if(errors[e.param]) {
-        errors[e.param] = errors[e.param]+e;
+        errors[e.param] = errors[e.param]+e.msg;
       } else {
-        errors[e.param] = [e];
+        errors[e.param] = [e.msg];
       }
     }
       res.render('recipe_edit', {errors: errors,blah: "fnord"});
