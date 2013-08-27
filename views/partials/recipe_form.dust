@@ -16,7 +16,7 @@
 
   <label  class="control-label" for="description">Description</label>
     <div class="controls">
-  <input name="description" value="{value}" />
+  <input name="description" value="{description}" />
       <span id="description-error" class="help-inline">{@error id="description"}{.}{/error}</span>
     </div>
   </div>  

@@ -1,10 +1,12 @@
 {@countUp domain="recipe-steps" rebase="step"}
-<div {@last}{:else}data-count="{index}"{/last} id="li-step-{index}" class="control-group{@is_err id="step.{index}"} error{/is_err}{@last}{:else} domain-step{/last}">
-<div class="controls>
-<label for="step">{@math key=1 method="add" operand=index /}. </label>
-<input name="step" value="{value}">
-<span id="name-error" class="help-inline">{#error id="step.{index}"}{.}{/error}</span>
-<a href="#" class="delete_step"><i class="icon-trash"></i></a>
-</div>
+<div {@last}{:else}data-count="{index}"{/last} 
+  id="li-step-{index}"
+  class="control-group{@is_err id="steps.{index}"} error{/is_err}{@last}{:else} domain-step{/last}">
+  <div class="controls">
+    <label for="steps">{@math key=1 method="add" operand=index /}. </label>
+    <input name="steps" value="{step}">
+    <span id="step-error" class="help-inline">{@error id="steps.{index}"}{.}{/error}</span>
+    <a href="#" class="delete_step"><i class="icon-trash"></i></a>
+  </div>
 </div>
 {/countUp}

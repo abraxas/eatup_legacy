@@ -15,7 +15,7 @@
 
     <div class="span5">
       <input id="ingredients-{index}-ingredient" class="ingredient span4" name="ingredients.ingredient[{index}]" value="{base.ingredient}">
-      <span id="ingredient-error" class="help-inline">{@error id="ingredients.{index}.ingredients"}{.}{/error}</span>      
+      <span id="ingredient-error" class="help-inline">{@error id="ingredients.{index}.ingredient"}{.}{/error}</span>      
       <a href="#" class="delete_step"><i class="icon-trash"></i></a>
     </div>    
   </div>    

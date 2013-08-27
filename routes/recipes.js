@@ -67,26 +67,25 @@ exports.list = function(req, res){
 }
 
 
-exports.add = function(req, res){
-  res.render('recipe_new', { });
+exports.add = function(req, res){  
+  res.render('recipe_new', { recipe: {} });
 }
 exports.edit = function(req, res){
   res.render('recipe_edit', { });
 }
 
 var checks = function(req) {
-  console.log("BODY = " + JSON.stringify(req.body))
 
-  req.check('name').notNull()
-  req.check('description').notNull()
+  req.check('name',"Required").notNull()
+  req.check('description',"Required").notNull()
 
-  for(var stepid in req.body.step) {
-    req.check('step.'+stepid).notNull()
+  for(var stepid in req.body.steps) {
+    req.check('steps.'+stepid,"Required").notNull()
   }
   for(var ingid in req.body.ingredients) {
-    req.check(['ingredients',ingid,'amount']).notNull().isNumeric()
-    req.check(['ingredients',ingid,'measure']).notNull()
-    req.check(['ingredients',ingid,'ingredient']).notNull()
+    req.check(['ingredients',ingid,'amount'],"Invalid").isNumeric()
+    req.check(['ingredients',ingid,'measure'],"Required").notNull()
+    req.check(['ingredients',ingid,'ingredient'],"Required").notNull()
   }
   
 
@@ -95,15 +94,31 @@ var checks = function(req) {
 
 exports.create = function(req, res){
   var proto = homogenize(req.body);
-  proto.steps = proto.step;
-  proto._user = req.user._id;
-  var r = new Recipe(proto);
-  console.log("SET " + JSON.stringify(proto));
-  
-  r.save(function(err,obj) {
 
-    console.log("ERROR? " + JSON.stringify(err));
-    console.log("ERRORZ? " + JSON.stringify(err.errors));
+  proto._user = req.user._id;
+  res.locals.recipe = new Recipe(proto);
+  console.log("SET " + JSON.stringify(proto));
+
+  checks(req)
+  var errors = req.validationErrors();
+
+  if(errors) {
+    console.log("WTF ERRORS + " + JSON.stringify(errors))
+    var tmp = errors;
+    errors = {}
+    for(var i in tmp) {
+      var e = tmp[i];
+      if(errors[e.param]) {
+        errors[e.param] = errors[e.param]+e.msg;
+      } else {
+        errors[e.param] = [e.msg];
+      }
+    }
+      res.render('recipe_new', {errors: errors});
+      return;
+  }
+
+  r.save(function(err,obj) {
     res.redirect('/recipes');
   });
 }
@@ -148,7 +163,7 @@ var homogenize = function(body) {
 
 exports.update = function(req, res, next) {
   var recipe = res.locals.recipe;
-  var flds = ['name','description','ingredients']
+  var flds = ['name','description','ingredients','steps']
 
   var data = homogenize(req.body);
 
@@ -156,7 +171,6 @@ exports.update = function(req, res, next) {
     var f = flds[i]
     recipe[f] = data[f]      
   }
-  recipe.steps = data.step;
 
   checks(req)
   var errors = req.validationErrors();
