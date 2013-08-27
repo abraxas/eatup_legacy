@@ -24,6 +24,8 @@
     "passport-local": "*",
     "jade": "*",
 
+    "connect-redis": "*",
+
     "crypto": "*",
     "node-uuid": "*"    
   }

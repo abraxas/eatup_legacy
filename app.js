@@ -7,6 +7,9 @@ var models = require('./eatup/models');
 
 var express = require('express');
 var expressValidator = require('express-validator')
+var RedisStore = require('connect-redis')(express)
+var sessionStore = new RedisStore()
+
 var minify = require('express-minify');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -17,6 +20,7 @@ var path = require('path');
 var dpm = require('dust-partials-middleware');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
+
 
 var remember = require('./public/javascripts/remember');  
 
@@ -70,7 +74,7 @@ app.set('view engine', 'dust');
   app.use(express.bodyParser());
   app.use(expressValidator());
   app.use(express.methodOverride());
-  app.use(express.session({ secret: 'dd05cede-040e-11e3-856f-002170491e5c'}));
+  app.use(express.session({ secret: 'dd05cede-040e-11e3-856f-002170491e5c',store: sessionStore}));
 
 
   app.use(passport.initialize());
