@@ -79,9 +79,16 @@ var checks = function(req) {
   req.check('name',"Required").notNull()
   req.check('description',"Required").notNull()
 
+  console.log("BODDY " + JSON.stringify(req.body))
+
+  req.check('steps.0',"Required").notNull()
   for(var stepid in req.body.steps) {
-    req.check('steps.'+stepid,"Required").notNull()
+    if(stepid>0) {
+      console.log("CHECK STEP " + "steps."+stepid)
+      req.check('steps.'+stepid,"Required").notNull()
+    }
   }
+
   for(var ingid in req.body.ingredients) {
     req.check(['ingredients',ingid,'amount'],"Invalid").isNumeric()
     req.check(['ingredients',ingid,'measure'],"Required").notNull()
@@ -118,7 +125,7 @@ exports.create = function(req, res){
       return;
   }
 
-  r.save(function(err,obj) {
+  res.locals.recipe.save(function(err,obj) {
     res.redirect('/recipes');
   });
 }
