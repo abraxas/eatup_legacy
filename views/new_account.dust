@@ -1,0 +1,10 @@
+{>layout/}
+{<main}
+<form method="post">
+<label>Username <input type="text" name="username"></label>
+<label>Email <input type="text" name="email"></label>
+<label>Password <input type="password" name="password"></label>
+<label>Confirm Password <input type="password" name="confirm_password"></label>
+<button class="btn" type="submit" value="Create Account">Log In</button>
+</form>
+{/main}

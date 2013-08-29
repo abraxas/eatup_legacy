@@ -178,6 +178,9 @@ nav.load_menu(app);
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/new_account', user.new_account);
+app.post('/new_account', user.create_account);
+app.get('/users/:id/delete',user.remove);
 
 app.use('/partials',dpm(__dirname,'/views'));
 

@@ -4,6 +4,7 @@ User List
 <ul>
 {#users}
 <li>{username} &lt;{email}&gt;
+<a href="/users/{_id}/delete">Delete</a>
 {/users}
 </ul>
 {/main}
