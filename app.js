@@ -20,7 +20,7 @@ var path = require('path');
 var dpm = require('dust-partials-middleware');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
-
+var RememberMeStrategy = require('passport-remember-me').Strategy;
 
 var remember = require('./public/javascripts/remember');  
 
@@ -34,17 +34,74 @@ var passport = require('passport')
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
-
-
 //Test Login
 
 
 
 
 
+//remember-me stuff!
+
+var randomString = function(len) {
+  var buf = []
+    , chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    , charlen = chars.length;
+
+  for (var i = 0; i < len; ++i) {
+    buf.push(chars[getRandomInt(0, charlen - 1)]);
+  }
+
+  return buf.join('');
+};
+
+var getRandomInt = function(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+passport.use(new RememberMeStrategy(
+  function(token, done) {
+    consumeRememberMeToken(token, function(err, uid) {
+      if (err) { return done(err); }
+      if (!uid) { return done(null, false); }
+      
+      findById(uid, function(err, user) {
+        if (err) { return done(err); }
+        if (!user) { return done(null, false); }
+        return done(null, user);
+      });
+    });
+  },
+  issueToken
+));
+
+function issueToken(user, done) {
+  var token = randomString(64);
+  saveRememberMeToken(token, user.id, function(err) {
+    if (err) { return done(err); }
+    return done(null, token);
+  });
+}
+
+//end of remember-me!
 
 
 var app = express();
+
+var tokens = {}
+
+function consumeRememberMeToken(token, fn) {
+  var uid = tokens[token];
+  // invalidate the single-use token
+  delete tokens[token];
+  express.session('remember_me', tokens)
+  return fn(null, uid);
+}
+
+function saveRememberMeToken(token, uid, fn) {
+  tokens[token] = uid;
+  express.session('remember_me', tokens)
+  return fn();
+}
 
 
 // all environments
@@ -79,6 +136,7 @@ app.set('view engine', 'dust');
 
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(passport.authenticate('remember-me'));
 
   var User = mongoose.model('User');
 
@@ -144,12 +202,20 @@ app.set('view engine', 'dust');
 
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
+  function(req, res, next) {
+    
+    issueToken(req.user, function(err, token) {
+      if (err) { return next(err); }
+      res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+      return next();
+    });
+
     res.redirect('/');
   });
 
 app.get('/logout', 
   function(req, res) {
+    res.clearCookie('remember_me');
     req.logout()
     res.redirect('/login');
   });

@@ -21,10 +21,12 @@
     "mongoose":"*",
     "dust-partials-middleware":"*",    
     "passport": "*",
+    "passport-remember-me": "*",
     "passport-local": "*",
     "jade": "*",
 
     "connect-redis": "*",
+    "redis": "*",
 
     "crypto": "*",
     "node-uuid": "*"    

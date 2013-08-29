@@ -20,9 +20,9 @@ function mh(a,b,c) {
 
 exports.load_menu = function(app) {
   app.locals.menu = [
-    mh('cookbook','Cookbook'),
+//    mh('cookbook','Cookbook'),
     mh('recipes','My Recipes','/recipes'),
-    mh('help','Help')
+//    mh('help','Help')
   ]
   app.locals.is_active_tab = is_active_tab
 }
