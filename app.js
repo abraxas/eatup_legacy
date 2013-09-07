@@ -14,6 +14,7 @@ var minify = require('express-minify');
 var routes = require('./routes');
 var user = require('./routes/user');
 var recipes = require('./routes/recipes');
+var cookbook = require('./routes/cookbook');
 var http = require('http');
 var klei = require('klei-dust');
 var path = require('path');
@@ -21,6 +22,7 @@ var dpm = require('dust-partials-middleware');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
 var RememberMeStrategy = require('passport-remember-me').Strategy;
+var childProcess = require('child_process')
 
 var remember = require('./public/javascripts/remember');  
 
@@ -106,6 +108,39 @@ function saveRememberMeToken(token, uid, fn) {
 
 // all environments
 app.configure(function() {  
+
+/*  //restore from backup if possible!
+  var wait_for_restore_done = 0
+  var wait_for_restore = function(then) {
+    setTimeout(function() {
+      if(wait_for_restore_done) {
+        then();
+      }   
+      wait_for_restore(then);
+    },200);     
+  }
+  wait_for_restore_done = 0;
+
+  var restore = childProcess.exec('./dbrestore',function(error,stdout,stderr) {
+    if (error) {
+      //        console.log(error.stack);
+      //        console.log('Error code: '+error.code);
+      //        console.log('Signal received: '+error.signal);
+    }
+    console.log('Restore STDOUT: '+stdout);
+    console.log('Restore Process STDERR: '+stderr);  
+  })
+
+
+  restore.on('exit', function (code) {
+    wait_for_restore_done = 1;
+    console.log('Child process exited with exit code '+code);
+  });
+*/
+//app.use(function(req,res,next) {
+//  wait_for_restore(next);
+//});
+
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 
@@ -113,6 +148,7 @@ app.use(function(req,res,next) {
   remember.forget();
   next();
 })
+
 
 klei.useHelpers = 1;
 klei.onDustInit(function(dust) {
@@ -255,8 +291,77 @@ app.locals.layout = 'layout'
 
 
 recipes.register_routes(app);
+cookbook.register_routes(app);
 
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+
+
+
+
+
+
+
+//BACKUP SHIT! - to be integrated later
+
+/*
+var cronJob = require('cron').CronJob;
+new cronJob('0 * * * * *', function(){ 
+  //runs once per hour
+
+  console.log("Performing data backup!")
+  var dump = childProcess.exec('./dbdump',function(error,stdout,stderr) {
+    if (error) {
+      console.log(error.stack);
+      console.log('Error code: '+error.code);
+      console.log('Signal received: '+error.signal);
+    }
+    console.log('Backup STDOUT: '+stdout);
+    console.log('Backup STDERR: '+stderr);  
+  })
+
+  dump.on('exit', function (code) {
+//    console.log('Backup exited with exit code '+code);
+  });
+
+}, null, true, "America/New_York");
+
+process.on('exit',function() {
+
+ console.log("Performing final backup!")
+  var x = childProcess.exec('./dbdump',function(error,stdout,stderr) {
+    if (error) {
+      console.log(error.stack);
+      console.log('Error code: '+error.code);
+      console.log('Signal received: '+error.signal);
+    }
+    console.log('Backup STDOUT: '+stdout);
+    console.log('Backup STDERR: '+stderr);  
+  })
+
+  x.on('exit', function (code) {
+    console.log('Backup exited with exit code '+code);
+  });
+
+})
+*/
+
+/*
+var dump = childProcess.exec('./dbdump',function(error,stdout,stderr) {
+   if (error) {
+     console.log(error.stack);
+     console.log('Error code: '+error.code);
+     console.log('Signal received: '+error.signal);
+   }
+   console.log('Child Process STDOUT: '+stdout);
+   console.log('Child Process STDERR: '+stderr);  
+})
+
+dump.on('exit', function (code) {
+   console.log('Child process exited with exit code '+code);
+ });
+
+*/

@@ -28,6 +28,9 @@
     "connect-redis": "*",
     "redis": "*",
 
+    "dropbox": "*",
+    "cron": "*",
+
     "crypto": "*",
     "node-uuid": "*"    
   }

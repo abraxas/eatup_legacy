@@ -1,0 +1,9 @@
+{>layout/}
+{<main}
+{>"./partials/cookbook_nav" /}
+
+<h2>Cookbook</h2>
+{>"./partials/cookbook_search" /}
+{>"./partials/cookbook_results" /}
+{/main}
+

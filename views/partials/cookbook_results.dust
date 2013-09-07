@@ -1,0 +1,5 @@
+{#results}
+{>"./partials/cookbook_result" /}
+{:else}
+No results
+{/results}

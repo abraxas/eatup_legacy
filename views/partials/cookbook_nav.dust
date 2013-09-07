@@ -1,0 +1,5 @@
+<ul id="cookbook-navbar" class="nav nav-pills">
+  <li class="active"><a href="#">All</a></li>
+  <li><a href="#">Favorites</a></li>
+  <li><a href="#">By Ingredients</a></li>
+</ul>
