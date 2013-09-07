@@ -1,0 +1,21 @@
+<div>Recipe for:</div>
+<h2>{name}</h2>
+<div class="description">
+{description}
+</div>
+
+<h3>Ingredients</h3>
+<ul>  
+{#ingredients}
+<li>
+{amount} {measure} {ingredient}
+</li>
+{/ingredients}
+</ul>
+  
+<h3>Steps</h3>
+<ol>
+{#steps}
+<li>{.}</li>
+{/steps}
+</ol>

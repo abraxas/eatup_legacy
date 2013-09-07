@@ -6,6 +6,7 @@ Welcome to {title}
 <ul>
 {#recipes}
   <li>{name}
+    <a href="/recipes/{_id}/view">View</a>
     <a href="/recipes/{_id}/edit">Edit</a>
     <a href="/recipes/{_id}/delete">Delete</a>
   

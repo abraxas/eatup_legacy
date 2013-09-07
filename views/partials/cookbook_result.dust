@@ -1,3 +1,4 @@
-<div>
-Result
-</div>
+<li>
+{name}
+<a href="/cookbook/{_id}/view">View</a>
+</li>

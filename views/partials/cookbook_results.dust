@@ -1,5 +1,7 @@
 {#results}
+<ul>
 {>"./partials/cookbook_result" /}
+</ul>
 {:else}
 No results
 {/results}

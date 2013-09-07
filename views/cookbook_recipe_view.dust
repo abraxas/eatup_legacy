@@ -1,0 +1,7 @@
+{>layout/}
+{<main}
+{#recipe}
+{>"./partials/recipe_view_contents" /}
+{/recipe}
+<div><a href="/cookbook">Back</a></div>
+{/main}

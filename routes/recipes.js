@@ -13,6 +13,7 @@ exports.register_routes = function(app) {
   app.get('/recipes/:id*',recipes.id_base);
   app.post('/recipes/:id*',recipes.id_base);
   app.get('/recipes/:id/edit',recipes.edit);
+  app.get('/recipes/:id/view',recipes.view);
   app.post('/recipes/:id/edit',recipes.update);
   app.get('/recipes/:id/delete',recipes.remove);
   app.get('/recipefudge',recipes.recipefudge);
@@ -70,6 +71,11 @@ exports.list = function(req, res){
 exports.add = function(req, res){  
   res.render('recipe_new', { recipe: {} });
 }
+
+exports.view = function(req, res){
+  res.render('recipe_view', { });
+}
+
 exports.edit = function(req, res){
   res.render('recipe_edit', { });
 }
