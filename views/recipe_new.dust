@@ -3,7 +3,7 @@
 <h1> Create Recipe</h1>
 
 {#recipe}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {>"./partials/recipe_form" /}
   <button type="submit">Submit</button>
 </form>

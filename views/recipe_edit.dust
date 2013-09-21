@@ -2,7 +2,7 @@
 {<main}
 
 {#recipe}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   <fieldset>
   <legend>Edit Recipe</legend>
   {>"./partials/recipe_form" /}

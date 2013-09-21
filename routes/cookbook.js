@@ -46,3 +46,7 @@ exports.list = function(req,res,next){
 exports.view = function(req, res){
   res.render('cookbook_recipe_view', { });
 }
+
+//to do front-end redirect, try:
+//
+//history.pushState({},'test','/cookbook')

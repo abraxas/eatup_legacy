@@ -4,6 +4,18 @@
 </div>
 {/error}
 <input name="_user" value="{_user}" type="hidden" />
+
+
+  <div id="recipe-pic">
+    <img class="recipe-image" src="image"></img>
+  </div>
+  <div  id="image-cg" class="control-group {@is_err id="image"}error{/is_err}">
+    <label class="control-label" for="image">image</label>
+    <div class="controls">
+      <input type="file" name="image" value="{image}" />
+      <span id="image-error" class="help-inline">{@error id="image"}{.}{/error}</span>
+    </div>
+  </div>
   
   <div  id="name-cg" class="control-group {@is_err id="name"}error{/is_err}">
     <label class="control-label" for="name">Name</label>

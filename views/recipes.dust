@@ -5,10 +5,12 @@ Welcome to {title}
 <h2>Recipes</h2>
 <ul>
 {#recipes}
-  <li>{name}
+  <li>
+    {name}{image_id}
     <a href="/recipes/{_id}/view">View</a>
     <a href="/recipes/{_id}/edit">Edit</a>
     <a href="/recipes/{_id}/delete">Delete</a>
+    {?image_id}<img src="/recipes/{_id}/image" class="thumbnail"></img>{/image_id}
   
   </li>
 {/recipes}

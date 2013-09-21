@@ -1,7 +1,6 @@
 <div>Recipe for:</div>
-<h2>{name}</h2>
-<div class="description">
-{description}
+<div id="recipe-view-pic">
+  <img class="recipe-image" src="image"></img>
 </div>
 
 <h3>Ingredients</h3>

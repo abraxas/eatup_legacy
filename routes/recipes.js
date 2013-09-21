@@ -3,6 +3,8 @@
  * GET home page.
  */
 
+var fs = require('fs') 
+
 exports.register_routes = function(app) {
   var recipes = exports;
   app.get('/recipes*',recipes.base);
@@ -18,6 +20,7 @@ exports.register_routes = function(app) {
   app.get('/recipes/:id/delete',recipes.remove);
   app.get('/recipefudge',recipes.recipefudge);
 
+  app.get('/recipes/:id/image',recipes.image);
 }
 
 var remember = require('../public/javascripts/remember')
@@ -178,15 +181,15 @@ exports.update = function(req, res, next) {
   var recipe = res.locals.recipe;
   var flds = ['name','description','ingredients','steps']
 
-  var data = homogenize(req.body);
+    var data = homogenize(req.body);  
 
   for(var i in flds) {
     var f = flds[i]
-    recipe[f] = data[f]      
+      recipe[f] = data[f]      
   }
 
   checks(req)
-  var errors = req.validationErrors();
+    var errors = req.validationErrors();
 
   if(errors) {
     var tmp = errors;
@@ -199,8 +202,8 @@ exports.update = function(req, res, next) {
         errors[e.param] = [e.msg];
       }
     }
-      res.render('recipe_edit', {errors: errors,blah: "fnord"});
-      return;
+    res.render('recipe_edit', {errors: errors,blah: "fnord"});
+    return;
   }
   recipe.save(function(err) {
     if(errors) {      
@@ -208,14 +211,34 @@ exports.update = function(req, res, next) {
 
       res.render('recipe_edit');
     } else {
-      res.redirect('/recipes');
+      //Adding file stuff
+      var file = req.files.image;
+      if(file) {
+        console.log("Uploadage " + file.path);
+        recipe.saveImage(file,function(err,file) {
+          console.log("SAVED? " + err)
+          if(file) {
+            console.log(file._id)
+            console.log(file.name)
+          }
+          res.redirect('/recipes');
+        })      
+        } else {
+          console.log("NO FILE");
+          res.redirect('/recipes');
+        }
+
+
+
+
+
     }
   });
 }
 
 exports.remove = function(req, res){
   console.log("REMOVE");
-    console.log("L J " + JSON.stringify(res.locals));
+  console.log("L J " + JSON.stringify(res.locals));
   res.locals.recipe_q.remove(function() {
     res.redirect('/recipes');
   })
@@ -229,3 +252,9 @@ exports.recipefudge = function(req, res){
   res.render('index', { });
 }
 
+exports.image = function(req,res,next) {
+  var recipe = res.locals.recipe;
+  var image_id = recipe.image_id;
+
+  recipe.getImageStream(res,"Image not found");
+}

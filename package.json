@@ -19,6 +19,7 @@
     "consolidate":"*",
     "promise":"*",
     "mongoose":"*",
+    "gridfs-stream":"*",
     "dust-partials-middleware":"*",    
     "passport": "*",
     "passport-remember-me": "*",

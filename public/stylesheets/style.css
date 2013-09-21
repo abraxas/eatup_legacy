@@ -34,4 +34,17 @@ div.ingredients div.controls div {
 
 #cookbook-navbar{
     margin-left: 30px;
-  }
+}
+
+.thumbnail {
+  max-width: 50px;
+  max-height: 50px;
+  width: expression(this.width > 50 ? "50px" : true);
+  height: expression(this.height > 50 ? "50px" : true);
+}
+.recipe-image {
+  max-width: 400px;
+  max-height: 200px;
+  width: expression(this.width > 400 ? "400px" : true);
+  height: expression(this.height > 200 ? "200px" : true);
+}
