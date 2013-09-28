@@ -3,7 +3,7 @@
 Welcome to {title}
 
 <h2>Recipes</h2>
-<ul class="recipe-list">
+<ul class="recipe-list thumbnails">
 {#recipes}
   <li>
     {?image_id}

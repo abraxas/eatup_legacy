@@ -44,6 +44,7 @@ div.ingredients div.controls div {
   display: inline;
   margin-right: 10px;
 }
+
 .recipe-image {
   max-width: 400px;
   max-height: 200px;
@@ -52,7 +53,8 @@ div.ingredients div.controls div {
   height: expression(this.height > 200 ? "200px" : true);
 }
 
-.recipe-list li {
+.recipe-list.thumbnails li {
   display: block;
   height: 75px;
+  width: 450px;
 }
