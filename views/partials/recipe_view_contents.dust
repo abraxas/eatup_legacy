@@ -1,6 +1,6 @@
 <div>Recipe for:</div>
 <div id="recipe-view-pic">
-  <img class="recipe-image" src="image"></img>
+  <img class="recipe-image" src="/recipes/{id}/image"></img>
 </div>
 
 <h3>Ingredients</h3>
