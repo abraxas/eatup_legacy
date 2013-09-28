@@ -1,0 +1,7 @@
+<div class="well">
+<form>
+<label for="ingredient">Ingredient</label>
+<input name="ingredient">
+<input type="submit" value="Search"></input>
+</form>
+</div>
