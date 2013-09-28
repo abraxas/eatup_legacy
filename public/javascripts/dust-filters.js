@@ -2,7 +2,6 @@
 (function(exports,dust){
 
 if(typeof window === 'undefined') {
-//  remember = require('./remember')
   dust.helpers = require('dustjs-helpers').helpers
 }
 
@@ -26,7 +25,6 @@ exports.countUpInit = dust.helpers.countUpInit = function(chunk,context,bodies,p
 }
 
 exports.countUp = dust.helpers.countUp = function(chunk,context,bodies,params) {
-//  var count_storage = remember('countUp.storage');
 //  if(!count_storage) { count_storage = {} }
 
   var domain = dust.helpers.tap(params.domain, chunk, context) || "none";
@@ -45,11 +43,9 @@ exports.countUp = dust.helpers.countUp = function(chunk,context,bodies,params) {
       i = -1;
     }
   }
-  //console.log("DOMAIN " + domain + " CS " + JSON.stringify(count_storage));
   i=i+1
   
   count_storage[domain] = i; 
-//  remember('countUp.storage',count_storage);
 
   var count = i;
   var body = bodies.block;

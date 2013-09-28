@@ -10,7 +10,7 @@ var expressValidator = require('express-validator')
 var RedisStore = require('connect-redis')(express)
 var sessionStore = new RedisStore()
 
-var minify = require('express-minify');
+//var minify = require('express-minify');
 var routes = require('./routes');
 var user = require('./routes/user');
 var recipes = require('./routes/recipes');
@@ -24,7 +24,6 @@ var mongoose = require('mongoose');
 var RememberMeStrategy = require('passport-remember-me').Strategy;
 var childProcess = require('child_process')
 
-var remember = require('./public/javascripts/remember');  
 
 var nav = require('./eatup/nav');
 
@@ -144,10 +143,6 @@ app.configure(function() {
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 
-app.use(function(req,res,next) {
-  remember.forget();
-  next();
-})
 
 
 klei.useHelpers = 1;
@@ -205,31 +200,9 @@ app.set('view engine', 'dust');
     if(req.user) {
       res.locals.current_user = req.user
     }
-
-
-
     next();
   })
 
-//  app.use(function(req,res,next) {
-
-    //after render callback
-//    var _render = res.render;
-//    var data = remember.get();
-
-//    var _render = res.render;
-//    res.render = function(view, options, callback) {
-//       _render.call(res, "Views/" + view, options, callback);
-//    };
-//    next();
-
-
-// });
-  app.use(function(a,b,next) {
-//    var dj = require('./public/javascripts/dust-filters.js')
-//    dj.forget();
-    next()
-  })
 
   app.use(app.router);
 

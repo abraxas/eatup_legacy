@@ -1,9 +1,39 @@
 {>layout/}
 {<main}
 {>"./partials/cookbook_nav" /}
+<div id="cookbook-search">
+{>"./partials/cookbook_search" /}
+</div>
 
 <h2>Cookbook</h2>
-{>"./partials/cookbook_search" /}
+
 {>"./partials/cookbook_results" /}
 {/main}
 
+
+<script src="/javascripts/dust-full-1.2.5.js" ></script>
+<script src="/javascripts/dust-helpers-1.1.1.js" ></script>
+<script src="/javascripts/remember.js" ></script>
+<script src="/javascripts/dust-filters.js" ></script>
+<script src="/partials/partials/cookbook_ingredient_search.js" ></script>
+<!--script src="/partials/partials/recipe_form_ingredient.js" ></script -->
+<script>
+var activate_tab = function(tab_id) {
+  var tab = $(tab_id);
+  tab.parent().parent().find('li').removeClass('active');
+  tab.parent().addClass('active');
+    
+};
+
+$('#cbnav-ingredient').click(function() {
+  activate_tab('#cbnav-ingredient');
+  dust.render("partials/cookbook_ingredient_search",null,function(err,out) {
+    if(err) {
+      console.log(err);
+    }
+    console.log("FOWND " + out);
+    $('#cookbook-search').html(out);
+  });
+})
+
+</script>

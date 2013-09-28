@@ -1,4 +1,5 @@
 <li>
+{?image_id}<img src="/recipes/{_id}/image" class="thumbnail"></img>{/image_id}
 {name}
 <a href="/cookbook/{_id}/view">View</a>
 </li>

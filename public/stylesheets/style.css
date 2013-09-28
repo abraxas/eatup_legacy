@@ -41,6 +41,8 @@ div.ingredients div.controls div {
   max-height: 50px;
   width: expression(this.width > 50 ? "50px" : true);
   height: expression(this.height > 50 ? "50px" : true);
+  display: inline;
+  margin-right: 10px;
 }
 .recipe-image {
   max-width: 400px;
