@@ -34,10 +34,21 @@ exports.id_base = function(req,res,next) {
 
 exports.list = function(req,res,next){
   if(req.user) {
-      Recipe.findByUser(req.user,function(err,rex) {
-        res.render('cookbook', { results: rex, });
-      })
-    }
+    var active = 'all';
+        var q = Recipe.find({'_user':req.user._id});
+        if(req.query.name) {
+          q = q.and([{'name': { $regex: new RegExp(req.query.name,'i') } }]);
+          active = 'name';
+        }
+        if(req.query.ingredient) {
+          q = q.and([{'ingredients.ingredient': { $regex: new RegExp(req.query.ingredient,'i') } }]);
+          active = 'ingredient';
+        }
+
+        q.exec(function(err,rex) {
+          res.render('cookbook', { results: rex, active: active });
+        })
+  }
     else {
       res.render('login', { });
     }

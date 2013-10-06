@@ -16,6 +16,7 @@
 <script src="/javascripts/remember.js" ></script>
 <script src="/javascripts/dust-filters.js" ></script>
 <script src="/partials/partials/cookbook_ingredient_search.js" ></script>
+<script src="/partials/partials/cookbook_name_search.js" ></script>
 <!--script src="/partials/partials/recipe_form_ingredient.js" ></script -->
 <script>
 var activate_tab = function(tab_id) {
@@ -25,6 +26,9 @@ var activate_tab = function(tab_id) {
     
 };
 
+$('#cbnav-all').click(function() {
+  window.location.href = '/cookbook';
+});
 $('#cbnav-ingredient').click(function() {
   activate_tab('#cbnav-ingredient');
   dust.render("partials/cookbook_ingredient_search",null,function(err,out) {
@@ -34,6 +38,16 @@ $('#cbnav-ingredient').click(function() {
     console.log("FOWND " + out);
     $('#cookbook-search').html(out);
   });
-})
+});
+$('#cbnav-name').click(function() {
+  activate_tab('#cbnav-name');
+  dust.render("partials/cookbook_name_search",null,function(err,out) {
+    if(err) {
+      console.log(err);
+    }
+    console.log("FOWND " + out);
+    $('#cookbook-search').html(out);
+  });
+});
 
 </script>
