@@ -12,7 +12,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
   </head>
-  <body data-remember="{remember_data}">
+  <body>
     {>"./partials/nav_menu" /}
     <div class="header">
       <div class="container">

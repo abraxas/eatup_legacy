@@ -1,5 +1,6 @@
 <ul id="cookbook-navbar" class="nav nav-pills">
-  <li class="active"><a href="#">All</a></li>
-  <li><a href="#">Favorites</a></li>
-  <li><a href="#">By Ingredients</a></li>
+  <li class="{@eq key=active value="all"}active{/eq}"><a id="cbnav-all" href="#">All</a></li>
+  <!-- li><a id="cbnav-favorites" href="#">Favorites</a></li -->
+  <li class="{@eq key=active value="name"}active{/eq}"><a id="cbnav-name" href="#">By Name</a></li>
+  <li class="{@eq key=active value="ingredient"}active{/eq}""><a id="cbnav-ingredient" href="#">By Ingredients</a></li>
 </ul>

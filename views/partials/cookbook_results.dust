@@ -1,7 +1,9 @@
+<ul class="recipe-list thumbnails">
 {#results}
-<ul>
 {>"./partials/cookbook_result" /}
-</ul>
 {:else}
+<li>
 No results
+</li>
 {/results}
+</ul>

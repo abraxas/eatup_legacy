@@ -37,14 +37,24 @@ div.ingredients div.controls div {
 }
 
 .thumbnail {
-  max-width: 50px;
-  max-height: 50px;
+  width: 50px;
+  height: 50px;
   width: expression(this.width > 50 ? "50px" : true);
   height: expression(this.height > 50 ? "50px" : true);
+  display: inline;
+  margin-right: 10px;
 }
+
 .recipe-image {
   max-width: 400px;
   max-height: 200px;
+  vertical-align: middle;
   width: expression(this.width > 400 ? "400px" : true);
   height: expression(this.height > 200 ? "200px" : true);
+}
+
+.recipe-list.thumbnails li {
+  display: block;
+  height: 75px;
+  width: 450px;
 }
