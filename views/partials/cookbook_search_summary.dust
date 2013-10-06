@@ -1,0 +1,11 @@
+{?search_criteria}
+<div class="well">
+<h4>Filters:</h4>
+<dl>
+{#search_criteria}
+<dt>{key}</dt>
+<dd>{value}</dd>
+{/search_criteria}
+</dl>
+</div>
+{/search_criteria}

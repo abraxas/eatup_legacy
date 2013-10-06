@@ -4,6 +4,9 @@
 <div id="cookbook-search">
 {>"./partials/cookbook_search" /}
 </div>
+<div id="cookbook-search-summary">
+{>"./partials/cookbook_search_summary" /}
+</div>
 
 <h2>Cookbook</h2>
 
@@ -17,6 +20,7 @@
 <script src="/javascripts/dust-filters.js" ></script>
 <script src="/partials/partials/cookbook_ingredient_search.js" ></script>
 <script src="/partials/partials/cookbook_name_search.js" ></script>
+<script src="/partials/partials/cookbook_search_summary.js" ></script>
 <!--script src="/partials/partials/recipe_form_ingredient.js" ></script -->
 <script>
 var activate_tab = function(tab_id) {
