@@ -99,7 +99,7 @@ var checks = function(req) {
   }
 
   for(var ingid in req.body.ingredients) {
-    req.check(['ingredients',ingid,'amount'],"Invalid").isNumeric()
+//    req.check(['ingredients',ingid,'amount'],"Invalid").isNumeric()
     req.check(['ingredients',ingid,'measure'],"Required").notNull()
     req.check(['ingredients',ingid,'ingredient'],"Required").notNull()
   }
