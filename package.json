@@ -15,7 +15,7 @@
     "jsdom":"*",
     "validator":"*",
     "dustjs-helpers":"*",
-    "dustjs-linkedin":"*",
+    "dustjs-linkedin":"2.1.0",
     "consolidate":"*",
     "promise":"*",
     "mongoose":"*",

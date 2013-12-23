@@ -188,8 +188,8 @@ exports.update = function(req, res, next) {
       recipe[f] = data[f]      
   }
 
-  checks(req)
-    var errors = req.validationErrors();
+  checks(req);
+  var errors = req.validationErrors();
 
   if(errors) {
     var tmp = errors;
@@ -205,16 +205,20 @@ exports.update = function(req, res, next) {
     res.render('recipe_edit', {errors: errors,blah: "fnord"});
     return;
   }
+
+  console.log("r2s");
   recipe.save(function(err) {
+    console.log("sy");
     if(errors) {      
       //return next(err);
 
       res.render('recipe_edit');
     } else {
+      console.log("ne");
       //Adding file stuff
       var file = req.files.image;
-      if(file) {
-        console.log("Uploadage " + file.path);
+
+      if(file && file.size) {
         recipe.saveImage(file,function(err,file) {
           console.log("SAVED? " + err)
           if(file) {
@@ -223,14 +227,11 @@ exports.update = function(req, res, next) {
           }
           res.redirect('/recipes');
         })      
-        } else {
+      } 
+      else {
           console.log("NO FILE");
           res.redirect('/recipes');
-        }
-
-
-
-
+      }
 
     }
   });
